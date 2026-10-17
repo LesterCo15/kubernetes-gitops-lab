@@ -1,0 +1,13 @@
+# Local environment files
+.env
+.env.*
+
+# Secrets and credentials
+*.pem
+*.key
+kubeconfig
+
+# Editor and operating system files
+.vscode/
+.DS_Store
+Thumbs.db
