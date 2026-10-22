@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Plan affordable, high-protein meals and track daily nutrition."
+  >
+  <title>HealthyBudget | Smart Meal Planning</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#" aria-label="HealthyBudget home">
+      <span class="brand-icon">H</span>
+      <span>Healthy<span class="brand-accent">Budget</span></span>
+    </a>
+
+    <p class="nav-label">WORKSPACE</p>
+    <nav aria-label="Main navigation">
+      <a class="nav-link active" href="#overview">Overview</a>
+      <a class="nav-link" href="#meal-planner">Meal planner</a>
+      <a class="nav-link" href="#food-library">Food library</a>
+    </nav>
+
+    <div class="sidebar-note">
+      <p class="eyebrow">THE DAILY MISSION</p>
+      <p>Build muscle.</p>
+      <p>Spend smarter.</p>
+      <p class="muted">One meal at a time.</p>
+    </div>
+
+    <div class="sidebar-footer">
+      <span class="status-dot"></span>
+      Personal nutrition workspace
+    </div>
+  </aside>
+
+  <main class="main-content" id="overview">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">YOUR PERSONAL NUTRITION HUB</p>
+        <h1>Eat smart. Get stronger.</h1>
+        <p class="muted">Affordable nutrition for your fitness goals.</p>
+      </div>
+      <div class="date-chip" id="current-date">Loading date...</div>
+    </header>
+
+    <section class="welcome-banner">
+      <div>
+        <p class="eyebrow">TODAY'S GAME PLAN</p>
+        <h2>Fuel your progress.</h2>
+        <p>Hit your protein target without overspending.</p>
+      </div>
+      <div class="banner-mark" aria-hidden="true">HB</div>
+    </section>
+    
+    <section class="panel settings-panel" aria-labelledby="targets-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">PERSONALIZE YOUR PLAN</p>
+          <h2 id="targets-heading">Daily targets & budget</h2>
+        </div>
+        <span class="tag">EDITABLE</span>
+      </div>
+
+      <form id="targets-form" class="targets-form">
+        <div class="target-field">
+          <label for="target-calories">Calories (kcal)</label>
+          <input id="target-calories" type="number"
+            min="500" max="10000" step="1" value="2400" required>
+        </div>
+
+        <div class="target-field">
+          <label for="target-protein">Protein (g)</label>
+          <input id="target-protein" type="number"
+            min="1" max="500" step="1" value="160" required>
+        </div>
+
+        <div class="target-field">
+          <label for="target-carbs">Carbs (g)</label>
+          <input id="target-carbs" type="number"
+            min="1" max="1000" step="1" value="280" required>
+        </div>
+
+        <div class="target-field">
+          <label for="target-fat">Fat (g)</label>
+          <input id="target-fat" type="number"
+            min="1" max="300" step="1" value="70" required>
+        </div>
+
+        <div class="target-field">
+          <label for="target-budget">Daily budget (₱)</label>
+          <input id="target-budget" type="number"
+            min="1" max="10000" step="1" value="250" required>
+        </div>
+
+        <button class="button button-primary" type="submit">
+          Save targets
+        </button>
+      </form>
+      <p class="stat-foot">Your settings are saved in this browser.</p>
+    </section>
+
+
+    <section class="section" aria-labelledby="nutrition-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DAILY PERFORMANCE</p>
+          <h2 id="nutrition-heading">Nutrition overview</h2>
+        </div>
+        <span class="tag">DAILY TARGETS</span>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <p class="stat-label">Calories</p>
+          <p class="stat-value" id="calories-total">0 <span>kcal</span></p>
+          <div class="progress-track">
+            <div class="progress-fill calories-fill" id="calories-progress"></div>
+          </div>
+          <p class="stat-foot" id="calories-target">Target: 2,400 kcal</p>
+        </article>
+
+        <article class="stat-card featured-card">
+          <p class="stat-label">Protein</p>
+          <p class="stat-value" id="protein-total">0 <span>g</span></p>
+          <div class="progress-track">
+            <div class="progress-fill protein-fill" id="protein-progress"></div>
+          </div>
+          <p class="stat-foot" id="protein-target">Target: 160 g</p>
+        </article>
+
+        <article class="stat-card">
+          <p class="stat-label">Carbohydrates</p>
+          <p class="stat-value" id="carbs-total">0 <span>g</span></p>
+          <div class="progress-track">
+            <div class="progress-fill carbs-fill" id="carbs-progress"></div>
+          </div>
+          <p class="stat-foot" id="carbs-target">Target: 280 g</p>
+        </article>
+
+        <article class="stat-card">
+          <p class="stat-label">Fat</p>
+          <p class="stat-value" id="fat-total">0 <span>g</span></p>
+          <div class="progress-track">
+            <div class="progress-fill fat-fill" id="fat-progress"></div>
+          </div>
+          <p class="stat-foot" id="fat-target">Target: 70 g</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      <section class="panel" id="meal-planner">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FUEL YOUR DAY</p>
+            <h2>Today's meals</h2>
+          </div>
+          <span class="tag" id="meal-count">0 foods</span>
+        </div>
+
+        <div id="meal-list" class="meal-list">
+          <p class="empty-state">Loading your meal plan...</p>
+        </div>
+
+        <button class="button button-primary" id="add-food-button" type="button">
+          + Add food to meal plan
+        </button>
+      </section>
+
+      <section class="panel budget-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SPEND WITH PURPOSE</p>
+            <h2>Food budget</h2>
+          </div>
+          <span class="budget-icon" aria-hidden="true">₱</span>
+        </div>
+
+        <p class="stat-label">Estimated daily food cost</p>
+        <p class="budget-total" id="daily-cost">₱0.00</p>
+
+        <div class="budget-row">
+          <span>Daily budget</span>
+          <strong id="budget-amount">₱250.00</strong>
+        </div>
+
+        <div class="budget-row">
+          <span>Budget remaining</span>
+          <strong id="budget-remaining">₱250.00</strong>
+        </div>
+
+        <div class="progress-track budget-track">
+          <div class="progress-fill budget-fill" id="budget-progress"></div>
+        </div>
+
+        <p class="stat-foot" id="budget-message">
+          Your estimated spending will appear here.
+        </p>
+
+        <div class="divider"></div>
+
+        <p class="stat-label">Protein efficiency</p>
+        <p class="efficiency-value" id="protein-efficiency">—</p>
+        <p class="stat-foot">Estimated grams of protein per ₱100 spent</p>
+      </section>
+    </section>
+
+    <section class="panel food-library" id="food-library">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">AFFORDABLE FUEL</p>
+          <h2>Food library</h2>
+        </div>
+        <p class="muted">Sample values · per 100 g</p>
+      </div>
+      <div class="food-library-controls">
+        <input
+          id="food-search"
+          type="search"
+          placeholder="Search foods..."
+          aria-label="Search foods"
+        >
+
+        <select id="food-category" aria-label="Filter foods by category">
+          <option value="All">All categories</option>
+          <option value="Protein">Protein</option>
+          <option value="Carbohydrate">Carbohydrate</option>
+          <option value="Fruit">Fruit</option>
+        </select>
+      </div>
+      <div id="food-library-list" class="food-library-list">
+        <p class="empty-state">Loading food options...</p>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <p>HealthyBudget · Built for smarter nutrition.</p>
+      <p>Nutrition and price figures are estimates.</p>
+    </footer>
+  </main>
+
+  <dialog id="food-dialog" class="food-dialog">
+    <form id="food-form">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">MEAL BUILDER</p>
+          <h2>Add food</h2>
+        </div>
+        <button class="icon-button" id="close-dialog" type="button"
+          aria-label="Close dialog">×</button>
+      </div>
+
+      <label for="food-select">Choose food</label>
+      <select id="food-select" name="food" required></select>
+
+      <label for="meal-select">Meal</label>
+      <select id="meal-select" name="meal" required>
+        <option value="Breakfast">Breakfast</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Dinner">Dinner</option>
+        <option value="Snacks">Snacks</option>
+      </select>
+
+      <label for="food-grams">Amount in grams</label>
+      <input
+        id="food-grams"
+        name="grams"
+        type="number"
+        min="1"
+        max="3000"
+        step="1"
+        value="100"
+        required
+      >
+
+      <p class="form-hint">
+        Nutrition and cost estimates will scale with the amount you enter.
+      </p>
+
+      <button class="button button-primary" type="submit">
+        Add to meal plan
+      </button>
+    </form>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
