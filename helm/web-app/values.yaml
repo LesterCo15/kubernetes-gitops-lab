@@ -1,8 +1,8 @@
 replicaCount: 4
 
 image:
-  repository: nginx
-  tag: "1.28"
+  repository: ghcr.io/lesterco15/healthybudget
+  tag: "0.1.0"
   pullPolicy: IfNotPresent
 
 service:
