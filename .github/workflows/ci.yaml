@@ -5,17 +5,28 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    permission:
+      contents: read
+      packages: write
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
 
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build Docker image
-        run: docker build -t healthybudget:ci ./app
+        run: docker build -t ghcr.io/lesterco15/healthybudget:ci-${{ github.sha }} ./app
+
+      - name: Push docker image
+        run: docker push ghcr.io/lesterco15/healthybudget:ci-${{ github.sha }}
