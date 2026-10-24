@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "v*"
 
 jobs:
   build:
@@ -24,9 +26,19 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set Image tag
+        id: image
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            echo "tag=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=ci-${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/lesterco15/healthybudget:ci-${{ github.sha }} ./app
+        run: docker build -t ghcr.io/lesterco15/healthybudget:${{ steps.image.outputs.tag }} ./app
 
       - name: Push docker image
-        run: docker push ghcr.io/lesterco15/healthybudget:ci-${{ github.sha }}
+        run: docker push ghcr.io/lesterco15/healthybudget:${{ steps.image.outputs.tag }}
