@@ -7,6 +7,9 @@ on:
       - main
     tags:
       - "v*"
+    paths:
+    - "app/**"
+    - ".github/workflows/ci.yaml"
 
 jobs:
   build:
