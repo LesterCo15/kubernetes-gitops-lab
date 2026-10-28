@@ -16,3 +16,4 @@ resources:
   limits:
     cpu: 250m
     memory: 128Mi
+# PR validation trigger test

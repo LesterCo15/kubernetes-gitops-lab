@@ -6,9 +6,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-    - "app/**"
-    - ".github/workflows/**"
 
 permissions:
   contents: read
