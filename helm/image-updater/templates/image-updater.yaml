@@ -1,0 +1,10 @@
+{{- if .Values.imageUpdater.enabled }}
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  applicationRefs:
+    {{- toYaml .Values.imageUpdater.applicationRefs | nindent 4 }}
+{{- end }}

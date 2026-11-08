@@ -1,0 +1,19 @@
+imageUpdater:
+  enabled: true
+  applicationRefs:
+  - namePattern: "web-app-gitops"
+    images:
+    - alias: healthybudget
+      imageName: ghcr.io/lesterco15/healthybudget:0.1.x
+      commonUpdateSettings:
+        updateStrategy: semver
+        allowTags: "regexp:^0\\.1\\.[0-9]+$"
+      manifestTargets:
+        helm:
+          name: image.repository
+          tag: image.tag
+    writeBackConfig:
+      method: git:secret:github-write-creds
+      gitConfig:
+        branch: main
+        writeBackTarget: "helmvalues:./values.yaml"
